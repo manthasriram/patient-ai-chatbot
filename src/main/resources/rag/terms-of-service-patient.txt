@@ -1,0 +1,13 @@
+These Terms of Service govern your experience with you Doctors office.
+
+1. Appointment cancellation
+- Appointment can be cancelled only 2 days in advance.
+
+2. Booking new appointments
+-  Only existing patients can book appointments via a chatbot
+
+3. Billing
+- Patients need to pay any outstanding bills before booking a new appointment.
+
+4. Self check-in
+- Patients are advised to check-in before their appointment to avoid delays. If the patient has already completed self check-in, they can proceed to the appointment.
