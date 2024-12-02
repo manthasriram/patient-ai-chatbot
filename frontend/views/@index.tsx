@@ -44,7 +44,7 @@ export default function Index() {
       content: message
     });
     let first = true;
-    AssistantService.nurseChat(chatId, message)
+    AppointmentUIService.chat(chatId, message)
       .onNext(token => {
         if (first && token) {
           addMessage({
