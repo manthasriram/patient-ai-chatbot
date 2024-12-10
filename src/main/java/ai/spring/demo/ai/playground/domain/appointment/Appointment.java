@@ -1,4 +1,4 @@
-package ai.spring.demo.ai.playground.data.appointment;
+package ai.spring.demo.ai.playground.domain.appointment;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,5 +1,6 @@
-package ai.spring.demo.ai.playground.services;
+package ai.spring.demo.ai.playground.common;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.advisor.api.AdvisedRequest;
 import org.springframework.ai.chat.client.advisor.api.AdvisedResponse;
 import org.springframework.ai.chat.client.advisor.api.CallAroundAdvisor;
@@ -10,6 +11,7 @@ import org.springframework.ai.chat.model.MessageAggregator;
 
 import reactor.core.publisher.Flux;
 
+@Slf4j
 public class LoggingAdvisor implements CallAroundAdvisor, StreamAroundAdvisor {
 
 	@Override
@@ -24,19 +26,19 @@ public class LoggingAdvisor implements CallAroundAdvisor, StreamAroundAdvisor {
 
 	@Override
 	public AdvisedResponse aroundCall(AdvisedRequest advisedRequest, CallAroundAdvisorChain chain) {
-		System.out.println("\nRequest: " + advisedRequest);
+		log.debug("\nRequest: {}", advisedRequest);
 		AdvisedResponse response = chain.nextAroundCall(advisedRequest);
-		System.out.println("\nResponse: " + response);
+		log.debug("\nResponse: {} ", response);
 		return response;
 
 	}
 
 	@Override
 	public Flux<AdvisedResponse> aroundStream(AdvisedRequest advisedRequest, StreamAroundAdvisorChain chain) {
-		System.out.println("\nRequest: " + advisedRequest);
+		log.debug("\nRequest: ", advisedRequest);
 		Flux<AdvisedResponse> responses = chain.nextAroundStream(advisedRequest);
 		return new MessageAggregator().aggregateAdvisedResponse(responses, aggregatedAdvisedResponse -> {
-			System.out.println("\nResponse: " + aggregatedAdvisedResponse);
+			log.info("\nResponse: " , aggregatedAdvisedResponse);
 		});
 	}
 

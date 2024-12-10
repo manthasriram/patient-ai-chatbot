@@ -1,5 +1,7 @@
-package ai.spring.demo.ai.playground.services;
+package ai.spring.demo.ai.playground.web;
 
+import ai.spring.demo.ai.playground.agent.PatientAssistant;
+import ai.spring.demo.ai.playground.controller.AgentResponse;
 import ai.spring.demo.ai.playground.controller.ChatMessage;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,7 @@ public class PatientAssistantController {
     private PatientAssistant nurseAssistant;
 
     @PostMapping("/ai/patient/chat")
-    public String nurseAssistant(@RequestBody @NotNull ChatMessage chatMessage) {
+    public AgentResponse nurseAssistant(@RequestBody @NotNull ChatMessage chatMessage) {
         return nurseAssistant.chat(chatMessage);
     }
 }

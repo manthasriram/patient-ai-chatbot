@@ -1,6 +1,7 @@
 package ai.spring.demo.ai.playground.services.appointment;
 
-import ai.spring.demo.ai.playground.data.appointment.Appointment;
+import ai.spring.demo.ai.playground.domain.appointment.Appointment;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -9,11 +10,17 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class AppointmentService {
 
-    private List<Appointment> appointments = new ArrayList<>();
+    private final List<Appointment> appointments;
 
-    public List<Appointment> getAppointments() {
+    public AppointmentService() {
+        appointments = new ArrayList<>();
+        InitAppointments();
+    }
+
+    public void InitAppointments() {
         appointments.add(Appointment.builder().firstName("Sriram").lastName("Kumar").context("1")
                 .date(LocalDate.parse("2024-11-11"))
                         .address("123, Main Street, New York, USA")
@@ -49,10 +56,14 @@ public class AppointmentService {
                         .address("123, Main Street, New York, USA")
                 .appointmentStatus(Appointment.APPOINTMENT_STATUS.CHECK_OUT)
                 .billingStatus(Appointment.BILLING_STATUS.UNPAID).build());
-        return  appointments;
+    }
+
+    public List<Appointment> getAppointments() {
+        return appointments;
     }
 
     public Optional<Appointment> findAppointment(String firstName, String lastName) {
+        log.info("Finding appointment for {} {}", firstName, lastName);
         return appointments.stream().filter(a ->
                 a.getFirstName().equalsIgnoreCase(firstName)
                         && a.getLastName().equalsIgnoreCase(lastName)).findFirst();

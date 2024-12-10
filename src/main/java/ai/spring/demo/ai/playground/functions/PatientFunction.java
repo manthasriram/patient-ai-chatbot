@@ -1,6 +1,7 @@
-package ai.spring.demo.ai.playground.services.appointment;
+package ai.spring.demo.ai.playground.functions;
 
-import ai.spring.demo.ai.playground.data.appointment.Appointment;
+import ai.spring.demo.ai.playground.domain.appointment.Appointment;
+import ai.spring.demo.ai.playground.services.appointment.AppointmentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -33,9 +34,32 @@ public class PatientFunction {
 
     public record SelfCheckinLink(String url) {};
 
+    public record SelfCheckinStatusRequest(String appointment) {};
+
+    public record SelfCheckinStatusResponse(String status) {};
+
     public record ProviderAddressRequest(String context) {};
 
     public record ProviderAddressResponse(String address) {};
+
+    public record  FindPatientRequest(String firstName, String lastName) {};
+
+    public record  FindPatientResponse(String patientId) {};
+
+    @Bean
+    @Description("Get Patient details by first and last name")
+    public Function<FindPatientRequest, FindPatientResponse> findPatient() {
+        return request -> {
+            try {
+                log.info("Finding patient for {} {}", request.firstName(), request.lastName());
+                return new FindPatientResponse("1234");
+            }
+            catch (Exception e) {
+                log.error("Exception while finding patient: {}", NestedExceptionUtils.getMostSpecificCause(e).getMessage());
+                return new FindPatientResponse("");
+            }
+        };
+    }
 
     @Bean
     @Description("Get Patient appointment details by first and last name")
@@ -93,6 +117,19 @@ public class PatientFunction {
             }
             catch (Exception e) {
                 return new SelfCheckinLink("");
+            }
+        };
+    }
+
+    @Bean
+    @Description("Get the self check-in status for the patient for the appointment")
+    public  Function<SelfCheckinStatusRequest, SelfCheckinStatusResponse>  getSelfCheckinStatus() {
+        return request -> {
+            try {
+                SelfCheckinStatusResponse selfCheckinStatusResponse = new SelfCheckinStatusResponse("pending");
+                return selfCheckinStatusResponse;
+            } catch (Exception e) {
+                return new SelfCheckinStatusResponse("");
             }
         };
     }

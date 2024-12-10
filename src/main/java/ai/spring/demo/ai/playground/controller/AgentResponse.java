@@ -1,24 +1,15 @@
 package ai.spring.demo.ai.playground.controller;
 
 import ai.spring.demo.ai.playground.agent.AgentMetaData;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Data;
 
+@Data
 @AllArgsConstructor
 @Builder
-@NoArgsConstructor
-@Getter
-public class ChatMessage {
+public class AgentResponse {
 
-    @JsonProperty ("message")
     private String message;
-    @JsonProperty ("chatId")
-    private String chatId;
-
     private AgentMetaData agentMetaData;
-
-
 }

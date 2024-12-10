@@ -23,7 +23,7 @@ export default function Index() {
     if (!working) {
       AppointmentUIService.getAppointments().then(setAppointments);
     }
-  }, [working]);
+  }, []);
 
   function addMessage(message: MessageItem) {
     setMessages(messages => [...messages, message]);
@@ -48,13 +48,13 @@ export default function Index() {
       .onNext(token => {
         if (first && token) {
           addMessage({
-            role: 'assistant',
-            content: token
+            role: (token.agentMetaData.agentName !== 'undefined')? token.agentMetaData.agentName  : 'assistant',
+            content: token.message
           });
 
           first = false;
         } else {
-          appendToLatestMessage(token);
+          appendToLatestMessage(token.message);
         }
       })
       .onError(() => setWorking(false))
